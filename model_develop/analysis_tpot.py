@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score,mean_squared_error
 import numpy as np
 
 #%% import data set
-df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/data/all_conversions_variables.csv')
+df = pd.read_csv(r'data/all_conversions_variables.csv')
 # %%
 df['city'].nunique()
 pd.get_dummies(df.city)
