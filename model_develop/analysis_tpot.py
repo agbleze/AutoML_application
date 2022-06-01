@@ -22,6 +22,11 @@ df['instant_booking_encoded'] = le.fit_transform(df.instant_booking)
 df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 
 le.classes_
+
+#%%
+for x in df.city:
+        print(x)
+le.fit_transform(df.city.unique())
 # %%
 df
 # %% CREATE TARGET AND PREDICTORS 
@@ -38,8 +43,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 y_train.shape
 y_test.shape
+
 # %% create optimizer_pipeline
-optimizer_pipeline = TPOTRegressor(max_time_mins=30, 
+optimizer_pipeline = TPOTRegressor(max_time_mins=10, 
                                    verbosity=2, random_state=0
 )
 
