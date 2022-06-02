@@ -1,5 +1,6 @@
 #%%
 from dash import html, Input, Output, State, dcc
+import dash
 import dash_bootstrap_components as dbc
 
 
@@ -8,11 +9,16 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
     dbc.Row([dbc.Col([dcc.Dropdown(placeholder='Number of sessions by site visitor',
-                                   options={'label': x, 'value': [x for x in range(1,10)]}
+                                   options=[
+                                       {'label': num_session, 'value': num_session}
+                                       for num_session in range(1,11)
+                                       ]
+                                   
+        
                                    )
                       ]
                      ),
-            dbc.Col(),
+            dbc.Col([]),
             dbc.Col()
             ]
             ),
@@ -24,3 +30,7 @@ app.layout = html.Div([
     dbc.Row([dbc.Button(),
              ])
 ])
+
+app.run_server(port='4041', host='0.0.0.0', debug=False)
+
+# %%
