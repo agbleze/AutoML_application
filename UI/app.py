@@ -4,6 +4,8 @@ import dash
 import dash_bootstrap_components as dbc
 
 
+df = pd.read_csv(r'data/all_conversions_variables.csv')
+
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
