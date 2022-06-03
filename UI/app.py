@@ -2,10 +2,15 @@
 from dash import html, Input, Output, State, dcc
 import dash
 import dash_bootstrap_components as dbc
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
-
+#%%
 df = pd.read_csv(r'data/all_conversions_variables.csv')
 
+le = LabelEncoder()
+
+#%%
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
@@ -20,7 +25,14 @@ app.layout = html.Div([
                                    )
                       ]
                      ),
-            dbc.Col([]),
+            dbc.Col([dcc.Dropdown(
+                                    placeholder='city of vistor',
+                                   options={'label': [city for city in df['city'].unique()],
+                                             'value': [city_encoded for city_encoded in le.fit_transform(df['city'])]
+                                            }      
+                                   )
+                      ]
+                     ),
             dbc.Col()
             ]
             ),
