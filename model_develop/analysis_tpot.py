@@ -21,7 +21,6 @@ df['device_class_encoded'] = le.fit_transform(df.device_class)
 df['instant_booking_encoded'] = le.fit_transform(df.instant_booking)
 df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 
-le.classes_
 
 #%%
 for x in df.city:
