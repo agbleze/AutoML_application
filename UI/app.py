@@ -37,17 +37,19 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
-    dbc.Row([dbc.Col(lg=4,children=[dcc.Dropdown(placeholder='Number of sessions by site visitor',
-                                   options=[
-                                       {'label': num_session, 'value': num_session}
-                                       for num_session in range(1,11)
-                                       ]
-                                   
-        
-                                   )
+    dbc.Row([dbc.Col(lg=4,
+                     children=[dcc.Dropdown(id='session',
+                                                 placeholder='Number of sessions by site visitor',
+                                                options=[
+                                                    {'label': num_session, 'value': num_session}
+                                                    for num_session in range(1,11)
+                                                ]
+                                                
+                        
+                                            )
                       ]
                      ),
-            dbc.Col(lg=4,children=[dcc.Dropdown(
+            dbc.Col(lg=4,children=[dcc.Dropdown(id='city',
                                     placeholder='city of vistor',
                                    options=[{'label': city,
                                              'value': city
