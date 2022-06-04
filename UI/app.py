@@ -33,11 +33,16 @@ df[df['city']=='Kaiserslautern']['city_encoded'][11]
 
 #[avale, bvale]
 #%%
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[
+                                                dbc.themes.SOLAR,
+                                                dbc.icons.BOOTSTRAP,
+                                                dbc.icons.FONT_AWESOME,
+                                            ]
+                )
 
 app.layout = html.Div([
     dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
-    dbc.Row([dbc.Col(lg=4,
+    dbc.Row([dbc.Col(md=4,
                      children=[dcc.Dropdown(id='session',
                                                  placeholder='Number of sessions by site visitor',
                                                 options=[
@@ -58,9 +63,9 @@ app.layout = html.Div([
                                    )
                       ]
                      ),
-            dbc.Col(lg=4,
-                    placeholder='Is the visitor verified on platform',
+            dbc.Col(lg=4,     
                     children=[dcc.Dropdown(id='user_verified',
+                                           placeholder='Is the visitor verified on platform',
                                                 options=[{'label': user_verified, 'value': user_verified}
                                                          for user_verified in df['user_verified'].unique()
                                                          ]
@@ -81,22 +86,32 @@ app.layout = html.Div([
                                ]
                      ), 
              dbc.Col(lg=4,
-                     children=[dcc.Dropdown(
-                                            children=[dcc.Dropdown(id='instant_book',
+                     #children=[dcc.Dropdown(
+                                            children=[
+                                                dcc.Dropdown(id='instant_book',
+                                                                   placeholder='Whether visitor used instant booking feature',
                                                                    options=[{'label': instant_booking, 'value': instant_booking}
                                                                             for instant_booking in df['instant_booking'].unique()
                                                                             ]
                                                                    )
                                                       ]
-                                            )
-                               ]
-                     ), dbc.Col()
+                                            #)
+                               #]
+                     ),
+             dbc.Col([dbc.Button(id='submit_parameters', 
+                                 children='Predict booking days'
+                                 )
+                      ]
+                     )
              ]
             ),
-    dbc.Row([dbc.Button(),
-             ])
+    dbc.Row([
+             ]
+            )
 ])
 
 app.run_server(port='4041', host='0.0.0.0', debug=False)
 
+# %%
+df['instant_booking'].unique()
 # %%
