@@ -43,14 +43,13 @@ app.layout = html.Div([
                                                 options=[
                                                     {'label': num_session, 'value': num_session}
                                                     for num_session in range(1,11)
-                                                ]
-                                                
-                        
+                                                ]                       
                                             )
                       ]
                      ),
-            dbc.Col(lg=4,children=[dcc.Dropdown(id='city',
-                                    placeholder='city of vistor',
+            dbc.Col(lg=4,
+                    children=[dcc.Dropdown(id='city',
+                                    placeholder='city from which client visited the platform',
                                    options=[{'label': city,
                                              'value': city
                                             }
@@ -74,7 +73,7 @@ app.layout = html.Div([
     
     dbc.Row([dbc.Col(lg=4,
                      children=[dcc.Dropdown(id='device',
-                                            placeholder='type of device used on platform',
+                                            placeholder='type of device used to access platform',
                                             options=[{'label': device_class, 'value': device_class}
                                                      for device_class in df['device_class'].unique()
                                                      ]
