@@ -27,8 +27,8 @@ app.layout = html.Div([
                      ),
             dbc.Col([dcc.Dropdown(
                                     placeholder='city of vistor',
-                                   options={'label': [city for city in df['city'].unique()],
-                                             'value': [city_encoded for city_encoded in le.fit_transform(df['city'])]
+                                   options={'label': df['city'].unique(),
+                                             'value': le.fit_transform(df['city'])
                                             }      
                                    )
                       ]
