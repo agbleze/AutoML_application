@@ -86,17 +86,15 @@ app.layout = html.Div([
                                ]
                      ), 
              dbc.Col(lg=4,
-                     #children=[dcc.Dropdown(
-                                            children=[
-                                                dcc.Dropdown(id='instant_book',
-                                                                   placeholder='Whether visitor used instant booking feature',
-                                                                   options=[{'label': instant_booking, 'value': instant_booking}
-                                                                            for instant_booking in df['instant_booking'].unique()
-                                                                            ]
-                                                                   )
-                                                      ]
-                                            #)
-                               #]
+                    children=[
+                                dcc.Dropdown(id='instant_book',
+                                                placeholder='Whether visitor used instant booking feature',
+                                                options=[
+                                                            {'label': instant_booking, 'value': instant_booking}
+                                                            for instant_booking in df['instant_booking'].unique()
+                                                        ]
+                                            )
+                                ]
                      ),
              dbc.Col([dbc.Button(id='submit_parameters', 
                                  children='Predict booking days'
@@ -109,6 +107,25 @@ app.layout = html.Div([
              ]
             )
 ])
+
+##################### backend ##############################
+
+def make_prediction_request():
+    """_summary_
+    
+        TODO:
+        1. Determine if button has been clicked
+        2. If clicked, determine if values have been selected for all dropdown
+            a. if all values are not selected provide pop-up indicating all values are to be provided
+            b. If all values are provided, move to step 3
+        3. Assign selected values to variables
+        4. if selected value is string, filter data by selected values and take its equivalent encoded value ->
+        5. Create list of all selected values and A
+        6. create request with selected values as argments 
+        7. send get request to API
+        8. Receive response and retrieve the prediction returned
+        9. Return prediction to dash output.
+    """
 
 app.run_server(port='4041', host='0.0.0.0', debug=False)
 
