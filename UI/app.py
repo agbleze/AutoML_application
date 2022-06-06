@@ -113,7 +113,9 @@ app.layout = html.Div([
 ])
 
 ##################### backend ##############################
-@app.callback()
+@app.callback(Output(component_id='prediction_output', component_property='children'),
+              Input(component_id='session', component_property='value'),
+              Input(component_id='city', component_property='value'))
 
 def make_prediction_request(session):
     """_summary_
