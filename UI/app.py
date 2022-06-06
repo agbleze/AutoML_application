@@ -110,7 +110,7 @@ app.layout = html.Div([
 
 ##################### backend ##############################
 
-def make_prediction_request():
+def make_prediction_request(session):
     """_summary_
     
         TODO:
