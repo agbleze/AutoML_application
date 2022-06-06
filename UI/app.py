@@ -103,7 +103,9 @@ app.layout = html.Div([
                      )
              ]
             ),
-    dbc.Row([
+    dbc.Row([dbc.Col(id='prediction_output',
+                     []
+                     )
              ]
             )
 ])
