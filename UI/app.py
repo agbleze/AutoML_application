@@ -123,6 +123,13 @@ app.layout = html.Div([
 def make_prediction_request(session, city, user_verified, device, instant_booking):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if button_id == 'submit_parameters':
+        if ((not session) and (not city) and (not user_verified) 
+            and (not device) and (not instant_booking)):
+            # create pop-up indicating that all parameters needs to provided
+            pass
+        pass
+    
     
     
     """_summary_
