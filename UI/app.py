@@ -4,7 +4,7 @@ import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-
+import requests
 #%%
 df = pd.read_csv(r'data/all_conversions_variables.csv')
 
@@ -130,18 +130,21 @@ app.layout = html.Div([
               Input(component_id='instant_booking', component_property='value'))
 
 def make_prediction_request(session, city_selected, user_verified_selected, 
-                            device, instant_booking):
+                            device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if button_id == 'submit_parameters':
-        if ((not session) and (not city) and (not user_verified) 
-            and (not device) and (not instant_booking)):
+        if ((not session) and (not city_selected) and (not user_verified_selected) 
+            and (not device_selected) and (not instant_booking)):
             message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
             return message, True, dash.no_update
     else:
         city_encoded = df[df['city']==city_selected]['city_encoded'].item()
         country_encoded = df[df['city']==city_selected]['country_encoded'].item()
         user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
+        device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
+        instant_booking = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
+        
         
         
             
