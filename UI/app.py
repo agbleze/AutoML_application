@@ -107,27 +107,46 @@ app.layout = html.Div([
                      children=[
                          html.Div(id="prediction_output")
                      ]
+                     ),
+             dbc.Col([
+                 dbc.Modal(id='missing_para_popup', is_open=False,
+                     children=[
+                     dbc.ModalBody(id='desc_popup')
+                 ])
+             ]
                      )
              ]
             )
 ])
 
 ##################### backend ##############################
-@app.callback(Output(component_id='prediction_output', component_property='children'),
+@app.callback(Output(component_id='desc_popup', component_property='children'),
+              Output(component_id='missing_para_popup', component_property='is_open'),
+              Output(component_id='prediction_output', component_property='children'),
               Input(component_id='session', component_property='value'),
               Input(component_id='city', component_property='value'),
               Input(component_id='user_verified', component_property='value'),
               Input(component_id='device', component_property='value'),
               Input(component_id='instant_booking', component_property='value'))
 
-def make_prediction_request(session, city, user_verified, device, instant_booking):
+def make_prediction_request(session, city_selected, user_verified_selected, 
+                            device, instant_booking):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if button_id == 'submit_parameters':
         if ((not session) and (not city) and (not user_verified) 
             and (not device) and (not instant_booking)):
+            message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
+            return message, True, dash.no_update
+    else:
+        city_encoded = df[df['city']==city_selected]['city_encoded'].item()
+        country_encoded = df[df['city']==city_selected]['country_encoded'].item()
+        user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
+        
+        
+            
             # create pop-up indicating that all parameters needs to provided
-            pass
+            
         pass
     
     
@@ -151,5 +170,7 @@ def make_prediction_request(session, city, user_verified, device, instant_bookin
 app.run_server(port='4041', host='0.0.0.0', debug=False)
 
 # %%
-df['instant_booking'].unique()
+df['user_verified']
+# %%
+df.columns
 # %%
