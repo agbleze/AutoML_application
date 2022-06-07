@@ -115,9 +115,16 @@ app.layout = html.Div([
 ##################### backend ##############################
 @app.callback(Output(component_id='prediction_output', component_property='children'),
               Input(component_id='session', component_property='value'),
-              Input(component_id='city', component_property='value'))
+              Input(component_id='city', component_property='value'),
+              Input(component_id='user_verified', component_property='value'),
+              Input(component_id='device', component_property='value'),
+              Input(component_id='instant_booking', component_property='value'))
 
-def make_prediction_request(session):
+def make_prediction_request(session, city, user_verified, device, instant_booking):
+    ctx = dash.callback_context
+    
+    
+    
     """_summary_
     
         TODO:
