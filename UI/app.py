@@ -143,8 +143,13 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         country_encoded = df[df['city']==city_selected]['country_encoded'].item()
         user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
         device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
-        instant_booking = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
+        instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
         
+        X=[session, city_encoded, 
+           country_encoded, device_class_encoded, 
+           instant_booking_encoded,user_verified_encoded
+            ]
+        requests.args.get()
         
         
             
