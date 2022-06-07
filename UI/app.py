@@ -122,7 +122,7 @@ app.layout = html.Div([
 
 def make_prediction_request(session, city, user_verified, device, instant_booking):
     ctx = dash.callback_context
-    button_id = ctx.triggered[0]['prop_id'][0]
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
     
     """_summary_
