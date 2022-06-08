@@ -151,7 +151,19 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
         instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
         
-        in_data = {}
+        in_data = {'num_session': session, 
+                   'city_encoded': city_encoded,
+                   'country_encoded': country_encoded, 
+                   'device_class_encode': device_class_encoded,
+                   'instant_booking_encoded': instant_booking_encoded,
+                   'user_verified_encoded': user_verified_encoded
+                   }
+        URL = f'{HOST}:{PORT}{ENDPOINT}'
+        reqs = requests.post(url=URL, json=in_data)
+        response = reqs.content
+        
+        
+        
         X=[session, city_encoded, 
            country_encoded, device_class_encoded, 
            instant_booking_encoded,user_verified_encoded
