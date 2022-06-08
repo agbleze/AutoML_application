@@ -5,6 +5,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import requests
+import json
 
 #%%
 HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
@@ -161,7 +162,7 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         URL = f'{HOST}:{PORT}{ENDPOINT}'
         reqs = requests.post(url=URL, json=in_data)
         response = reqs.content
-        
+        json.loads(response)
         
         
         X=[session, city_encoded, 
