@@ -5,6 +5,12 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import requests
+
+#%%
+HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
+PORT = '8000'
+ENDPOINT = '/predict'
+
 #%%
 df = pd.read_csv(r'data/all_conversions_variables.csv')
 
@@ -145,6 +151,7 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
         instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
         
+        in_data = {}
         X=[session, city_encoded, 
            country_encoded, device_class_encoded, 
            instant_booking_encoded,user_verified_encoded
