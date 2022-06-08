@@ -28,6 +28,7 @@ class predictBookingDays(Resource):
                                         user_verified
                                         ]
                                      )
+        prediction_json = {'predicted_value': prediction}
         return jsonify(prediction)
     
 api.add_resource(predictBookingDays, '/predict')
