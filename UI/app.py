@@ -152,7 +152,7 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
         instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
         
-        in_data = {'num_session': session, 
+        in_data = {'num_sessions': session, 
                    'city_encoded': city_encoded,
                    'country_encoded': country_encoded, 
                    'device_class_encode': device_class_encoded,
@@ -162,23 +162,15 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         URL = f'{HOST}:{PORT}{ENDPOINT}'
         reqs = requests.post(url=URL, json=in_data)
         response = reqs.content
-        json.loads(response)
+        response_json = json.loads(response)
+        prediction = response_json['predicted_value']
         
-        
-        X=[session, city_encoded, 
-           country_encoded, device_class_encoded, 
-           instant_booking_encoded,user_verified_encoded
-            ]
-        requests.args.get()
-        
-        
+        return dash.no_update, False, prediction
+ 
             
             # create pop-up indicating that all parameters needs to provided
             
-        pass
-    
-    
-    
+        
     """_summary_
     
         TODO:
@@ -190,7 +182,7 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         4. if selected value is string, filter data by selected values and take its equivalent encoded value ->
         5. Create list of all selected values and A
         6. create request with selected values as argments 
-        7. send get request to API
+        7. send post request to API
         8. Receive response and retrieve the prediction returned
         9. Return prediction to dash output.
     """
