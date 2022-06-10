@@ -37,8 +37,6 @@ print([avale,bvale])
 #%%
 df[df['city']=='Kaiserslautern']['city_encoded'][11]
 
-
-#[avale, bvale]
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
                                                 dbc.themes.SOLAR,
