@@ -3,8 +3,6 @@ import joblib
 
 #%%
 model = joblib.load('api/model/booking_model.model')
-
-
 #%%
 
 def predict_booking(model, X):
