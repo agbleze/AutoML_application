@@ -18,7 +18,6 @@ class predictBookingDays(Resource):
         city = user_input['city_encoded']
         country = user_input['country_encoded']
         device = user_input['device_class_encoded']
-        #test_status = user_input['test_status_encoded']
         instant_booking = user_input['instant_booking_encoded']
         user_verified = user_input['user_verified_encoded']
         
