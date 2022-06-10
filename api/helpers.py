@@ -20,9 +20,3 @@ predict_booking(model=model,
                 X=[2, 4, 2, 9, 3, 7]
                 )
 
-
-
-
-
-
-# %%
