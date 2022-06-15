@@ -1,15 +1,18 @@
+#%%
 import joblib
 import warnings
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from helpers import predict_booking
+from api.helpers import predict_booking
 
 warnings.filterwarnings('ignore')
 
+
+model = joblib.load(filename='new_model.model')
+
+#%%
 app = Flask(__name__)
 api = Api(app)
-model = joblib.load(filename='api/model/booking_model.model')
-
 class predictBookingDays(Resource):
     @staticmethod
     def post():
@@ -22,8 +25,11 @@ class predictBookingDays(Resource):
         user_verified = user_input['user_verified_encoded']
         
         prediction = predict_booking(model=model, 
-                                     X=[num_sessions, city, country,
-                                        device, instant_booking,
+                                     X=[num_sessions, 
+                                        city,
+                                        country,
+                                        device, 
+                                        instant_booking,
                                         user_verified
                                         ]
                                      )
@@ -36,3 +42,4 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
         
         
+# %%
