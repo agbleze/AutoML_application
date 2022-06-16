@@ -7,6 +7,10 @@ from sklearn.preprocessing import LabelEncoder
 import requests
 import json
 
+
+#%%
+from .ui_helper import request_prediction
+
 #%%
 HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
 PORT = '8000'
@@ -140,7 +144,7 @@ def make_prediction_request(session, city_selected, user_verified_selected,
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if button_id == 'submit_parameters':
         if ((not session) and (not city_selected) and (not user_verified_selected) 
-            and (not device_selected) and (not instant_booking)):
+            and (not device_selected) and (not instant_booking_selected)):
             message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
             return message, True, dash.no_update
     else:
@@ -157,11 +161,16 @@ def make_prediction_request(session, city_selected, user_verified_selected,
                    'instant_booking_encoded': instant_booking_encoded,
                    'user_verified_encoded': user_verified_encoded
                    }
-        URL = f'{HOST}:{PORT}{ENDPOINT}'
-        reqs = requests.post(url=URL, json=in_data)
-        response = reqs.content
-        response_json = json.loads(response)
-        prediction = response_json['predicted_value']
+        # prediction = request_prediction()
+        # URL = f'{HOST}:{PORT}{ENDPOINT}'
+        # reqs = requests.post(url=URL, json=in_data)
+        # response = reqs.content
+        # response_json = json.loads(response)
+        # prediction = response_json['predicted_value']
+        
+        prediction = request_prediction(URL="http://192.168.1.2:8000/predict",
+                                        data=in_data
+                                    )
         
         return dash.no_update, False, prediction
  
