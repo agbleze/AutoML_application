@@ -3,7 +3,7 @@ import joblib
 import warnings
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from api.helpers import predict_booking
+from helpers import predict_booking
 
 warnings.filterwarnings('ignore')
 
