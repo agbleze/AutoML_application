@@ -6,10 +6,10 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import requests
 import json
-
+from dash.exceptions import PreventUpdate
 
 #%%
-from .ui_helper import request_prediction
+from ui_helper import request_prediction
 
 #%%
 HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
@@ -37,9 +37,9 @@ df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 avale = df[df['city']=='Kaiserslautern']['city_encoded'].item()#.unique().item(#[aindex]
 
 bvale = df[df['city']=='Kaiserslautern']['country_encoded'].item()#.unique()
-print([avale,bvale])
+#print([avale,bvale])
 #%%
-df[df['city']=='Kaiserslautern']['city_encoded'][11]
+#df[df['city']=='Kaiserslautern']['city_encoded'][11]
 
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
@@ -136,31 +136,36 @@ app.layout = html.Div([
               Input(component_id='city', component_property='value'),
               Input(component_id='user_verified', component_property='value'),
               Input(component_id='device', component_property='value'),
-              Input(component_id='instant_booking', component_property='value'))
+              Input(component_id='instant_book', component_property='value'))
 
 def make_prediction_request(session, city_selected, user_verified_selected, 
                             device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if ((not session) or (not city_selected) or (not user_verified_selected) 
+            or (not device_selected) or (not instant_booking_selected) or (button_id != 'submit_parameters')
+            ):
+        raise PreventUpdate
+    
     if button_id == 'submit_parameters':
-        if ((not session) and (not city_selected) and (not user_verified_selected) 
-            and (not device_selected) and (not instant_booking_selected)):
-            message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
-            return message, True, dash.no_update
-    else:
+        # if ((not session) or (not city_selected) or (not user_verified_selected) 
+        #     or (not device_selected) or (not instant_booking_selected)):
+        #     message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
+        #     return message, True, dash.no_update
+        # else:
         city_encoded = df[df['city']==city_selected]['city_encoded'].item()
         country_encoded = df[df['city']==city_selected]['country_encoded'].item()
         user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
         device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
         instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
-        
+
         in_data = {'num_sessions': session, 
-                   'city_encoded': city_encoded,
-                   'country_encoded': country_encoded, 
-                   'device_class_encode': device_class_encoded,
-                   'instant_booking_encoded': instant_booking_encoded,
-                   'user_verified_encoded': user_verified_encoded
-                   }
+                'city_encoded': city_encoded,
+                'country_encoded': country_encoded, 
+                'device_class_encode': device_class_encoded,
+                'instant_booking_encoded': instant_booking_encoded,
+                'user_verified_encoded': user_verified_encoded
+                }
         # prediction = request_prediction()
         # URL = f'{HOST}:{PORT}{ENDPOINT}'
         # reqs = requests.post(url=URL, json=in_data)
@@ -194,10 +199,10 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         9. Return prediction to dash output.
     """
 
-app.run_server(port='4041', host='0.0.0.0', debug=False)
+app.run_server(port='4046', host='0.0.0.0', debug=True)
 
-# %%
-df['user_verified']
-# %%
-df.columns
+# # %%
+# df['user_verified']
+# # %%
+# df.columns
 # %%
