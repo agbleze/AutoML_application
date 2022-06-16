@@ -13,10 +13,12 @@ def predict_booking(model, X):
                         num_sessions, city, country, device, \
                         instant booking, user verified'
                         )
-    prediction = model.predict([X])
+    prediction = model.predict(X)
     return prediction
 # %%
 predict_booking(model=model,
                 X=[2, 4, 2, 9, 3, 7]
                 )
 
+
+# %%
