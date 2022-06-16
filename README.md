@@ -1,2 +1,2 @@
 # machine_learning_api
-This API was built to spport prediction
+This API was built to support prediction

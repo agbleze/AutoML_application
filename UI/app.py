@@ -7,6 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 import requests
 import json
 from dash.exceptions import PreventUpdate
+from helper_components import output_card
 
 #%%
 from ui_helper import request_prediction
@@ -114,7 +115,12 @@ app.layout = html.Div([
             ),
     dbc.Row([dbc.Col(id='prediction',
                      children=[
-                         html.Div(id="prediction_output")
+                         html.Div(#id=, 
+                                  children=[output_card(card_id="prediction_output",
+                                                        card_label="Prediction"
+                                                        )
+                                            ]
+                                  )
                      ]
                      ),
              dbc.Col([
@@ -129,8 +135,8 @@ app.layout = html.Div([
 ])
 
 ##################### backend ##############################
-@app.callback(Output(component_id='desc_popup', component_property='children'),
-              Output(component_id='missing_para_popup', component_property='is_open'),
+@app.callback(#Output(component_id='desc_popup', component_property='children'),
+              #Output(component_id='missing_para_popup', component_property='is_open'),
               Output(component_id='prediction_output', component_property='children'),
               Input(component_id='session', component_property='value'),
               Input(component_id='city', component_property='value'),
@@ -142,10 +148,10 @@ def make_prediction_request(session, city_selected, user_verified_selected,
                             device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if ((not session) or (not city_selected) or (not user_verified_selected) 
-            or (not device_selected) or (not instant_booking_selected) or (button_id != 'submit_parameters')
-            ):
-        raise PreventUpdate
+    # if ((not session) and (not city_selected) and (not user_verified_selected) 
+    #         and (not device_selected) and (not instant_booking_selected) and (button_id != 'submit_parameters')
+    #     ):
+    #     raise PreventUpdate
     
     if button_id == 'submit_parameters':
         # if ((not session) or (not city_selected) or (not user_verified_selected) 
@@ -173,11 +179,11 @@ def make_prediction_request(session, city_selected, user_verified_selected,
         # response_json = json.loads(response)
         # prediction = response_json['predicted_value']
         
-        prediction = request_prediction(URL="http://192.168.1.2:8000/predict",
-                                        data=in_data
-                                    )
+        # prediction = request_prediction(URL="http://192.168.1.2:8000/predict",
+        #                                 data=in_data
+        #                             )
         
-        return dash.no_update, False, prediction
+        return device_class_encoded
  
             
             # create pop-up indicating that all parameters needs to provided
