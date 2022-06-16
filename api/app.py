@@ -24,14 +24,15 @@ class predictBookingDays(Resource):
         instant_booking = user_input['instant_booking_encoded']
         user_verified = user_input['user_verified_encoded']
         
+        data = X=[num_sessions, 
+                  city, 
+                  country,
+                  device, 
+                  instant_booking,
+                  user_verified
+                ]
         prediction = predict_booking(model=model, 
-                                     X=[num_sessions, 
-                                        city,
-                                        country,
-                                        device, 
-                                        instant_booking,
-                                        user_verified
-                                        ]
+                                     X=data
                                      )
         prediction_json = {'predicted_value': prediction}
         return jsonify(prediction_json)
