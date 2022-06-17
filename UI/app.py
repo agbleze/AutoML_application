@@ -155,38 +155,38 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
         raise PreventUpdate
 
     if button_id == 'submit_parameters':
-        # if ((not session) or (not city_selected) or (not user_verified_selected)
-        #     or (not device_selected) or (not instant_booking_selected)):
-        #     message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
-        #     return message, True, dash.no_update
-        # else:
-        city_encoded = df[df['city']==city_selected]['city_encoded'].item()
-        country_encoded = df[df['city']==city_selected]['country_encoded'].item()
-        user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
-        device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
-        instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
+        if ((not session) or (not city_selected) or (not user_verified_selected)
+            or (not device_selected) or (not instant_booking_selected)):
+            #message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
+            raise PreventUpdate #message, True, dash.no_update
+        else:
+            city_encoded = df[df['city']==city_selected]['city_encoded'].item()
+            country_encoded = df[df['city']==city_selected]['country_encoded'].item()
+            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
+            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
+            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
 
-        in_data = {'num_sessions': session,
-                'city_encoded': city_encoded,
-                'country_encoded': country_encoded,
-                'device_class_encode': device_class_encoded,
-                'instant_booking_encoded': instant_booking_encoded,
-                'user_verified_encoded': user_verified_encoded
-                }
+            in_data = {'num_sessions': session,
+                    'city_encoded': city_encoded,
+                    'country_encoded': country_encoded,
+                    'device_class_encode': device_class_encoded,
+                    'instant_booking_encoded': instant_booking_encoded,
+                    'user_verified_encoded': user_verified_encoded
+                    }
 
 
-        # prediction = request_prediction()
-        # URL = f'{HOST}:{PORT}{ENDPOINT}'
-        # reqs = requests.post(url=URL, json=in_data)
-        # response = reqs.content
-        # response_json = json.loads(response)
-        # prediction = response_json['predicted_value']
+            prediction = request_prediction()
+            URL = f'{HOST}:{PORT}{ENDPOINT}'
+            reqs = requests.post(url=URL, json=in_data)
+            response = reqs.content
+            response_json = json.loads(response)
+            prediction = response_json['predicted_value']
 
-        prediction = request_prediction(URL="http://192.168.1.3:8000/predict",
-                                        data=in_data
-                                    )
+            prediction = request_prediction(URL="http://192.168.1.3:8000/predict",
+                                            data=in_data
+                                        )
 
-        return prediction
+            return prediction
 
         # URL = "http://192.168.1.3:8000/predict"
 
