@@ -35,12 +35,16 @@ df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 
 #%%
 #aindex = df[df['city']=='Kaiserslautern']['city_encoded']#.reset_index()#.reindex([0])
-avale = df[df['city']=='Kaiserslautern']['city_encoded'].item()#.unique().item(#[aindex]
+avale = df[df['city']=='Kaiserslautern']['city_encoded'].tolist()#.item()#.unique().item(#[aindex]
 
-bvale = df[df['city']=='Kaiserslautern']['country_encoded'].item()#.unique()
+bvale = df[df['city']=='Kaiserslautern']['country_encoded'].tolist()#.item()#.unique()
+
+#%%
+avale.append(bvale)
 #print([avale,bvale])
 #%%
-#df[df['city']=='Kaiserslautern']['city_encoded'][11]
+#ind = df[df['city']=='Kaiserslautern']['city_encoded'].index
+print(df[df['city']=='Kaiserslautern']['city_encoded'].tolist())#[ind].values.tolist()
 
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
@@ -160,11 +164,11 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
             #message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
             raise PreventUpdate #message, True, dash.no_update
         else:
-            city_encoded = df[df['city']==city_selected]['city_encoded'].item()
-            country_encoded = df[df['city']==city_selected]['country_encoded'].item()
-            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].item()
-            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].item()
-            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].item()
+            city_encoded = df[df['city']==city_selected]['city_encoded']#.unique()#.item()
+            country_encoded = df[df['city']==city_selected]['country_encoded']#.unique()#.item()
+            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded']#.unique()#.item()
+            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded']#.unique()#.item()
+            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded']#.unique()#.item()
 
             in_data = {'num_sessions': session,
                     'city_encoded': city_encoded,
@@ -175,12 +179,12 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                     }
 
 
-            prediction = request_prediction()
-            URL = f'{HOST}:{PORT}{ENDPOINT}'
-            reqs = requests.post(url=URL, json=in_data)
-            response = reqs.content
-            response_json = json.loads(response)
-            prediction = response_json['predicted_value']
+            # prediction = request_prediction()
+            # URL = f'{HOST}:{PORT}{ENDPOINT}'
+            # reqs = requests.post(url=URL, json=in_data)
+            # response = reqs.content
+            # response_json = json.loads(response)
+            # prediction = response_json['predicted_value']
 
             prediction = request_prediction(URL="http://192.168.1.3:8000/predict",
                                             data=in_data
