@@ -35,16 +35,18 @@ df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 
 #%%
 #aindex = df[df['city']=='Kaiserslautern']['city_encoded']#.reset_index()#.reindex([0])
-avale = df[df['city']=='Kaiserslautern']['city_encoded'].tolist()#.item()#.unique().item(#[aindex]
+avale = df[df['city']=='Kaiserslautern']['city_encoded'].unique().item()#.unique().item(#[aindex]
 
-bvale = df[df['city']=='Kaiserslautern']['country_encoded'].tolist()#.item()#.unique()
+bvale = df[df['city']=='Kaiserslautern']['country_encoded'].unique().item()#.unique()
 
 #%%
-avale.append(bvale)
-#print([avale,bvale])
+print([avale,bvale])
 #%%
 #ind = df[df['city']=='Kaiserslautern']['city_encoded'].index
 print(df[df['city']=='Kaiserslautern']['city_encoded'].tolist())#[ind].values.tolist()
+
+#%%
+df[df['device_class']=='phone']['device_class_encoded'].unique().tolist()[0]
 
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
@@ -164,16 +166,16 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
             #message = 'All parameters must be provided. Please select the right values for all parameters from the dropdown'
             raise PreventUpdate #message, True, dash.no_update
         else:
-            city_encoded = df[df['city']==city_selected]['city_encoded']#.unique()#.item()
-            country_encoded = df[df['city']==city_selected]['country_encoded']#.unique()#.item()
-            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded']#.unique()#.item()
-            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded']#.unique()#.item()
-            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded']#.unique()#.item()
+            city_encoded = df[df['city']==city_selected]['city_encoded'].unique().tolist()[0]
+            country_encoded = df[df['city']==city_selected]['country_encoded'].unique().tolist()[0]
+            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].unique().tolist()[0]
+            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].unique().tolist()[0]
+            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].unique().tolist()[0]
 
             in_data = {'num_sessions': session,
                     'city_encoded': city_encoded,
                     'country_encoded': country_encoded,
-                    'device_class_encode': device_class_encoded,
+                    'device_class_encoded': device_class_encoded,
                     'instant_booking_encoded': instant_booking_encoded,
                     'user_verified_encoded': user_verified_encoded
                     }
