@@ -145,7 +145,7 @@ app.layout = html.Div([
               Input(component_id='device', component_property='value'),
               Input(component_id='instant_book', component_property='value'))
 
-def make_prediction_request(session, city_selected, user_verified_selected,
+def make_prediction_request(submit_button, session, city_selected, user_verified_selected,
                             device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -188,23 +188,23 @@ def make_prediction_request(session, city_selected, user_verified_selected,
 
         # return prediction
 
-        # URL = "http://192.168.1.3:8000/predict"
+        URL = "http://192.168.1.3:8000/predict"
 
-        # #in_data = {}
+        #in_data = {}
 
-        # in_data = {
-        #  'num_sessions': 2,
-        #  'city_encoded': 4,
-        #  'country_encoded': 1,
-        #  'device_class_encoded': 2,
-        #  'instant_booking_encoded': 0,
-        #  'user_verified_encoded': 1
-        # }
+        in_data = {
+          'num_sessions': 2,
+          'city_encoded': 4,
+          'country_encoded': 1,
+          'device_class_encoded': 2,
+          'instant_booking_encoded': 0,
+          'user_verified_encoded': 1
+        }
 
 
 
-        # a = request_prediction(URL=URL, data = in_data)
-        return button_id
+        a = request_prediction(URL=URL, data = in_data)
+        return a
 
 
 
