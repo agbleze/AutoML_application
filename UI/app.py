@@ -119,23 +119,24 @@ app.layout = html.Div([
                      )
              ]
             ),
+    html.Br(), html.Br(),
     dbc.Row([dbc.Col(id='prediction',
                      children=[
                          html.Div(id="prediction_output",
-                                  children=[output_card(card_id="prediction_output222",
+                                  children=[output_card(id="prediction_output222",
                                                         card_label="Prediction"
                                                         )
                                             ]
                                   )
                      ]
                      ),
-             dbc.Col([
-                 dbc.Modal(id='missing_para_popup', is_open=False,
-                     children=[
-                     dbc.ModalBody(id='desc_popup')
-                 ])
-             ]
-                     )
+             # dbc.Col([
+             #     dbc.Modal(id='missing_para_popup', is_open=False,
+             #         children=[
+             #         dbc.ModalBody(id='desc_popup')
+             #     ])
+             # ]
+             #         )
              ]
             )
 ])
@@ -143,7 +144,7 @@ app.layout = html.Div([
 ##################### backend ##############################
 @app.callback(#Output(component_id='desc_popup', component_property='children'),
               #Output(component_id='missing_para_popup', component_property='is_open'),
-              Output(component_id='prediction_output', component_property='children'),
+              Output(component_id='prediction_output222', component_property='children'),
               Input(component_id='submit_parameters', component_property='n_clicks'),
               Input(component_id='session', component_property='value'),
               Input(component_id='city', component_property='value'),
@@ -155,10 +156,10 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                             device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if ((not session) and (not city_selected) and (not user_verified_selected)
-            and (not device_selected) and (not instant_booking_selected) and (button_id != 'submit_parameters')
-        ):
-        raise PreventUpdate
+    # if ((not session) and (not city_selected) and (not user_verified_selected)
+    #         and (not device_selected) and (not instant_booking_selected) and (button_id != 'submit_parameters')
+    #     ):
+    #     raise PreventUpdate
 
     if button_id == 'submit_parameters':
         if ((not session) or (not city_selected) or (not user_verified_selected)
@@ -192,7 +193,10 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                                             data=in_data
                                         )
 
-            return prediction
+            if prediction > 1:
+                return f'{round(prediction)} day(s)'
+            else:
+                return f'{round(prediction)} day'
 
         # URL = "http://192.168.1.3:8000/predict"
 
