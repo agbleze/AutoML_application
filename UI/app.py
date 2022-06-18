@@ -224,4 +224,4 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                 return dash.no_update, False, f'{round(prediction)} day'
 
 
-app.run_server(port='4048', host='0.0.0.0', debug=True, use_reloader=False)
+app.run_server(port='4048', host='0.0.0.0', debug=False, use_reloader=False)
