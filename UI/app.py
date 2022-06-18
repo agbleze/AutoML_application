@@ -49,7 +49,7 @@ app = dash.Dash(__name__, external_stylesheets=[
 app.layout = html.Div([
 
     dbc.Row([
-html.Br(), html.Br(),
+        html.Br(), html.Br(),
         dbc.Col(dbc.Button('Project description',
                            id='proj_desc',
                            n_clicks=0
@@ -58,64 +58,19 @@ html.Br(), html.Br(),
         dbc.Col(children=[
                             html.Div(
                                     children=[create_offcanvans(id='project_canvans',
-                                                      title='PBookingGauger',
+                                                      title='BookingGauger',
                                                       is_open=False
                                                       )
                                               ]
                                 ),
                           ]
-                ),
-
-        # dbc.Col(
-        # children=[
-        #     dcc.Markdown('''
-
-        #                     ### BookingGauger
-
-        #                     #### Project description
-
-        #                     The aim of this project is to predict the number of days that
-        #                     a website visitor is likely to book based on a number of features.
-        #                     The client is an accommodation provider who sought to obtain
-        #                     an intelligent tool that can enable the prediction of booking days
-        #                     based on a number of features.
-
-        #                     #### Tools and method used
-        #                     Automated machine learning (AutoML) was employed to deliver a high
-        #                     accuracy optimized prediction model. The model is used to create
-        #                     an API that receives requests, makes and send prediction as response
-        #                     to this platform.
-
-        #                     With the user interface provided here, various features can be selected as
-        #                     input for the prediction
-
-        #                     Among others the tools used included the following
-        #                     * TPOT as the AutoML package to develop the machine learning model
-        #                     * Dash to build this web application as the User Interface
-        #                     * Flask to develop the API for the machine learning model
-
-
-        #                     #### Project output
-
-        #                     The main output of this project were the following
-
-        #                     * Machine learning API deployed
-        #                     * Machine learning web application
-
-        #                     Features
-        #                     The features used for the analysis are as follows;
-
-
-        #                     with the following
-        #                     pain point
-
-        #                 ''')
-        #     ]
-        # )
+                )
     ]),
-    dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
+    dbc.Label("Select characteristics of online visitor to predict the number of accommodation days to be booked"),
+    html.Br(), html.Br(),
     dbc.Row([dbc.Col(md=4,
-                     children=[dcc.Dropdown(id='session',
+                     children=[dbc.Label('Number of session'),
+                         dcc.Dropdown(id='session',
                                                  placeholder='Number of sessions by site visitor',
                                                 options=[
                                                     {'label': num_session, 'value': num_session}
@@ -125,7 +80,8 @@ html.Br(), html.Br(),
                       ]
                      ),
             dbc.Col(lg=4,
-                    children=[dcc.Dropdown(id='city',
+                    children=[dbc.Label('City'),
+                        dcc.Dropdown(id='city',
                                     placeholder='city from which client visited the platform',
                                    options=[{'label': city,
                                              'value': city
@@ -136,7 +92,9 @@ html.Br(), html.Br(),
                       ]
                      ),
             dbc.Col(lg=4,
-                    children=[dcc.Dropdown(id='user_verified',
+                    children=[
+                        dbc.Label('User verification status'),
+                        dcc.Dropdown(id='user_verified',
                                            placeholder='Is the visitor verified on platform',
                                                 options=[{'label': user_verified, 'value': user_verified}
                                                          for user_verified in df['user_verified'].unique()
@@ -149,7 +107,9 @@ html.Br(), html.Br(),
     html.Br(), html.Br(),
 
     dbc.Row([dbc.Col(lg=4,
-                     children=[dcc.Dropdown(id='device',
+                     children=[
+                         dbc.Label('Device type'),
+                         dcc.Dropdown(id='device',
                                             placeholder='type of device used to access platform',
                                             options=[{'label': device_class, 'value': device_class}
                                                      for device_class in df['device_class'].unique()
@@ -159,6 +119,7 @@ html.Br(), html.Br(),
                      ),
              dbc.Col(lg=4,
                     children=[
+                        dbc.Label('Instant booking feature used?'),
                                 dcc.Dropdown(id='instant_book',
                                                 placeholder='Whether visitor used instant booking feature',
                                                 options=[
@@ -168,7 +129,10 @@ html.Br(), html.Br(),
                                             )
                                 ]
                      ),
-             dbc.Col([dbc.Button(id='submit_parameters',
+             dbc.Col([
+                 #html.Br(),
+                 dbc.Label(''),
+                 dbc.Button(id='submit_parameters',
                                  children='Predict booking days'
                                  )
                       ]
