@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 import requests
 import json
 from dash.exceptions import PreventUpdate
-from helper_components import output_card
+from helper_components import output_card, create_offcanvans
 
 #%%
 from ui_helper import request_prediction, create_encoded_data
@@ -47,57 +47,72 @@ app = dash.Dash(__name__, external_stylesheets=[
                 )
 
 app.layout = html.Div([
-    dbc.Row(
-        dbc.Col(dbc.Button('Project description', id='proj_desc')
+
+    dbc.Row([
+html.Br(), html.Br(),
+        dbc.Col(dbc.Button('Project description',
+                           id='proj_desc',
+                           n_clicks=0
+                           )
             ),
+        dbc.Col(children=[
+                            html.Div(
+                                    children=[create_offcanvans(id='project_canvans',
+                                                      title='PBookingGauger',
+                                                      is_open=False
+                                                      )
+                                              ]
+                                ),
+                          ]
+                ),
 
-        dbc.Col(
-        children=[
-            dcc.Markdown('''
+        # dbc.Col(
+        # children=[
+        #     dcc.Markdown('''
 
-                            ### BookingGauger
+        #                     ### BookingGauger
 
-                            #### Project description
+        #                     #### Project description
 
-                            The aim of this project is to predict the number of days that
-                            a website visitor is likely to book based on a number of features.
-                            The client is an accommodation provider who sought to obtain
-                            an intelligent tool that can enable the prediction of booking days
-                            based on a number of features.
+        #                     The aim of this project is to predict the number of days that
+        #                     a website visitor is likely to book based on a number of features.
+        #                     The client is an accommodation provider who sought to obtain
+        #                     an intelligent tool that can enable the prediction of booking days
+        #                     based on a number of features.
 
-                            #### Tools and method used
-                            Automated machine learning (AutoML) was employed to deliver a high
-                            accuracy optimized prediction model. The model is used to create
-                            an API that receives requests, makes and send prediction as response
-                            to this platform.
+        #                     #### Tools and method used
+        #                     Automated machine learning (AutoML) was employed to deliver a high
+        #                     accuracy optimized prediction model. The model is used to create
+        #                     an API that receives requests, makes and send prediction as response
+        #                     to this platform.
 
-                            With the user interface provided here, various features can be selected as
-                            input for the prediction
+        #                     With the user interface provided here, various features can be selected as
+        #                     input for the prediction
 
-                            Among others the tools used included the following
-                            * TPOT as the AutoML package to develop the machine learning model
-                            * Dash to build this web application as the User Interface
-                            * Flask to develop the API for the machine learning model
-
-
-                            #### Project output
-
-                            The main output of this project were the following
-
-                            * Machine learning API deployed
-                            * Machine learning web application
-
-                            Features
-                            The features used for the analysis are as follows;
+        #                     Among others the tools used included the following
+        #                     * TPOT as the AutoML package to develop the machine learning model
+        #                     * Dash to build this web application as the User Interface
+        #                     * Flask to develop the API for the machine learning model
 
 
-                            with the following
-                            pain point
+        #                     #### Project output
 
-                        ''')
-            ]
-        )
-    ),
+        #                     The main output of this project were the following
+
+        #                     * Machine learning API deployed
+        #                     * Machine learning web application
+
+        #                     Features
+        #                     The features used for the analysis are as follows;
+
+
+        #                     with the following
+        #                     pain point
+
+        #                 ''')
+        #     ]
+        # )
+    ]),
     dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
     dbc.Row([dbc.Col(md=4,
                      children=[dcc.Dropdown(id='session',
@@ -183,6 +198,19 @@ app.layout = html.Div([
 ])
 
 ##################### backend ##############################
+
+@app.callback(Output(component_id='project_canvans', component_property='is_open'),
+              Input(component_id='proj_desc', component_property='n_clicks'),
+              State(component_id='project_canvans', component_property='is_open')
+              )
+def toggle_project_description(proj_desc_button_clicked, is_open):
+    if proj_desc_button_clicked:
+        return not is_open
+    else:
+        return is_open
+
+
+
 @app.callback(Output(component_id='desc_popup', component_property='children'),
               Output(component_id='missing_para_popup', component_property='is_open'),
               Output(component_id='prediction_output', component_property='children'),
@@ -232,4 +260,4 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                 return dash.no_update, False, f'{round(prediction)} day'
 
 
-app.run_server(port='4047', host='0.0.0.0', debug=False)
+app.run_server(port='4048', host='0.0.0.0', debug=True, use_reloader=False)
