@@ -47,6 +47,57 @@ app = dash.Dash(__name__, external_stylesheets=[
                 )
 
 app.layout = html.Div([
+    dbc.Row(
+        dbc.Col(dbc.Button('Project description', id='proj_desc')
+            ),
+
+        dbc.Col(
+        children=[
+            dcc.Markdown('''
+
+                            ### BookingGauger
+
+                            #### Project description
+
+                            The aim of this project is to predict the number of days that
+                            a website visitor is likely to book based on a number of features.
+                            The client is an accommodation provider who sought to obtain
+                            an intelligent tool that can enable the prediction of booking days
+                            based on a number of features.
+
+                            #### Tools and method used
+                            Automated machine learning (AutoML) was employed to deliver a high
+                            accuracy optimized prediction model. The model is used to create
+                            an API that receives requests, makes and send prediction as response
+                            to this platform.
+
+                            With the user interface provided here, various features can be selected as
+                            input for the prediction
+
+                            Among others the tools used included the following
+                            * TPOT as the AutoML package to develop the machine learning model
+                            * Dash to build this web application as the User Interface
+                            * Flask to develop the API for the machine learning model
+
+
+                            #### Project output
+
+                            The main output of this project were the following
+
+                            * Machine learning API deployed
+                            * Machine learning web application
+
+                            Features
+                            The features used for the analysis are as follows;
+
+
+                            with the following
+                            pain point
+
+                        ''')
+            ]
+        )
+    ),
     dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
     dbc.Row([dbc.Col(md=4,
                      children=[dcc.Dropdown(id='session',
