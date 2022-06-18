@@ -59,13 +59,22 @@ def create_offcanvans(id: str, title: str, is_open=False):
 
                                     __City__ : This is the city from which a customer is accessing the booking site from
 
-                                    __
+                                    __Country__ : This is the country from which the user is accessing the booking site.
+                                    During the selection of various variables, you do not have the burden to decide this
+                                    as reference is automatically made from the city selected.
 
-                                    the following features used for the analysis are as follows;
+                                    __Device Class__ : This is the type of device used to access the booking site. It has
+                                    the values desktop, phone or tablet
 
+                                    __Instant Booking__ : The is a feature on a booking site. Whether or not this
+                                    feature was used by a customer is including in predicting the number of day to
+                                    be booked
 
-                                    with the following
-                                    pain point
+                                    __User Verification Status__ : Whether or not a customer who visited the site
+                                    has been verified is included in predicting number of days to be booked.
+
+                                    ##### Target variable
+                                    __ Number of accommodation days to be booked__
 
 
                                     #### Tools and method used
