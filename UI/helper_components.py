@@ -1,6 +1,5 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-#import dash_trich_components as dtc
 from style import cardbody_style, card_icon, cardimg_style, card_style
 
 
