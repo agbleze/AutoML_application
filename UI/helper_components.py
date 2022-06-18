@@ -30,11 +30,6 @@ def output_card(id: str = None, card_label: str =None,
                 )
 
 
-
-
-
-
-
 def create_offcanvans(id: str, title: str, is_open=False):
     return html.Div(
         [
@@ -44,28 +39,47 @@ def create_offcanvans(id: str, title: str, is_open=False):
                 is_open=is_open,
                 children=[
                     dcc.Markdown('''
-
-                                    ### BookingGauger
-
                                     #### Project description
 
                                     The aim of this project is to predict the number of days that
-                                    a website visitor is likely to book based on a number of features.
+                                    customers are likely to book an accommodation for based on user bahaviour.
                                     The client is an accommodation provider who sought to obtain
                                     an intelligent tool that can enable the prediction of booking days
                                     based on a number of features.
 
+                                    #### Features / variables used
+
+                                    The dataset had a number of variables used as predictors for
+                                    predicting number of accommodations booked as the target variable.
+                                    These includes the following;
+
+                                    ##### Predictor variables
+                                    __Number of sessions__ : This describes the number of sessions a customer made
+                                    on the booking site.
+
+                                    __City__ : This is the city from which a customer is accessing the booking site from
+
+                                    __
+
+                                    the following features used for the analysis are as follows;
+
+
+                                    with the following
+                                    pain point
+
+
                                     #### Tools and method used
                                     Automated machine learning (AutoML) was employed to deliver a high
                                     accuracy optimized prediction model. The model is used to create
-                                    an API that receives requests, makes and send prediction as response
-                                    to this platform.
+                                    an API that receives request, makes and send prediction as response
+                                    to this web application.
 
-                                    With the user interface provided here, various features can be selected as
-                                    input for the prediction
+                                    With the user interface provided here, various features describing customers
+                                    behaviours and attributes can be selected to make a prediction.
 
-                                    Among others the tools used included the following
-                                    * TPOT as the AutoML package to develop the machine learning model
+                                    Among others, the tools used included the following
+
+                                    * TPOT as an AutoML package to develop the machine learning model
                                     * Dash to build this web application as the User Interface
                                     * Flask to develop the API for the machine learning model
 
@@ -77,12 +91,7 @@ def create_offcanvans(id: str, title: str, is_open=False):
                                     * Machine learning API deployed
                                     * Machine learning web application
 
-                                    Features
-                                    The features used for the analysis are as follows;
 
-
-                                    with the following
-                                    pain point
 
                                 '''
                                 )
