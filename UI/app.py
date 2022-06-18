@@ -10,43 +10,33 @@ from dash.exceptions import PreventUpdate
 from helper_components import output_card
 
 #%%
-from ui_helper import request_prediction
+from ui_helper import request_prediction, create_encoded_data
 
 #%%
-HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
-PORT = '8000'
-ENDPOINT = '/predict'
+from constant import HOST, PORT, ENDPOINT
+
+URL = f'{HOST}:{PORT}{ENDPOINT}'
 
 #%%
 df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
+
 
 df = df[['num_sessions', 'city', 'country',
         'device_class', 'instant_booking',
         'user_verified', 'days'
         ]]
 
-le = LabelEncoder()
-# %%
-df['city_encoded'] = le.fit_transform(df.city)
-df['country_encoded'] = le.fit_transform(df.country)
-df['device_class_encoded'] = le.fit_transform(df.device_class)
-df['instant_booking_encoded'] = le.fit_transform(df.instant_booking)
-df['user_verified_encoded'] = le.fit_transform(df.user_verified)
 
 #%%
-#aindex = df[df['city']=='Kaiserslautern']['city_encoded']#.reset_index()#.reindex([0])
-avale = df[df['city']=='Kaiserslautern']['city_encoded'].unique().item()#.unique().item(#[aindex]
+df = create_encoded_data(data=df, columns=['city',
+                                            'country',
+                                            'device_class',
+                                            'instant_booking',
+                                            'user_verified'
+                                            ]
+                          )
 
-bvale = df[df['city']=='Kaiserslautern']['country_encoded'].unique().item()#.unique()
 
-#%%
-print([avale,bvale])
-#%%
-#ind = df[df['city']=='Kaiserslautern']['city_encoded'].index
-print(df[df['city']=='Kaiserslautern']['city_encoded'].tolist())#[ind].values.tolist()
-
-#%%
-df[df['device_class']=='phone']['device_class_encoded'].unique().tolist()[0]
 
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
@@ -156,10 +146,6 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                             device_selected, instant_booking_selected):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    # if ((not session) and (not city_selected) and (not user_verified_selected)
-    #         and (not device_selected) and (not instant_booking_selected) and (button_id != 'submit_parameters')
-    #     ):
-    #     raise PreventUpdate
 
     if button_id == 'submit_parameters':
         if ((not session) or (not city_selected) or (not user_verified_selected)
@@ -185,15 +171,7 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                     'user_verified_encoded': user_verified_encoded
                     }
 
-
-            # prediction = request_prediction()
-            # URL = f'{HOST}:{PORT}{ENDPOINT}'
-            # reqs = requests.post(url=URL, json=in_data)
-            # response = reqs.content
-            # response_json = json.loads(response)
-            # prediction = response_json['predicted_value']
-
-            prediction = request_prediction(URL="http://192.168.1.3:8000/predict",
+            prediction = request_prediction(URL=URL,
                                             data=in_data
                                         )
 
@@ -202,51 +180,5 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
             else:
                 return dash.no_update, False, f'{round(prediction)} day'
 
-        # URL = "http://192.168.1.3:8000/predict"
-
-        # #in_data = {}
-
-        # in_data = {
-        #   'num_sessions': 2,
-        #   'city_encoded': 4,
-        #   'country_encoded': 1,
-        #   'device_class_encoded': 2,
-        #   'instant_booking_encoded': 0,
-        #   'user_verified_encoded': 1
-        # }
-
-
-
-        # a = request_prediction(URL=URL, data = in_data)
-        # return a
-
-
-
-
-
-            # create pop-up indicating that all parameters needs to provided
-
-
-    """_summary_
-
-        TODO:
-        1. Determine if button has been clicked
-        2. If clicked, determine if values have been selected for all dropdown
-            a. if all values are not selected provide pop-up indicating all values are to be provided
-            b. If all values are provided, move to step 3
-        3. Assign selected values to variables
-        4. if selected value is string, filter data by selected values and take its equivalent encoded value ->
-        5. Create list of all selected values and A
-        6. create request with selected values as argments
-        7. send post request to API
-        8. Receive response and retrieve the prediction returned
-        9. Return prediction to dash output.
-    """
 
 app.run_server(port='4047', host='0.0.0.0', debug=False)
-
-# # %%
-# df['user_verified']
-# # %%
-# df.columns
-# %%
