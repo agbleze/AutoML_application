@@ -17,6 +17,7 @@ from constant import HOST, PORT, ENDPOINT
 
 URL = f'{HOST}:{PORT}{ENDPOINT}'
 
+print(URL)
 #%%
 df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
 
