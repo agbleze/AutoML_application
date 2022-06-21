@@ -207,7 +207,7 @@ def make_prediction_request(submit_button: int, session: int, city_selected: str
     city_selected : str
         This is the city from which a customer is accessing the booking site from
     user_verified_selected : str
-        DESCRIPTION.
+        Whether or not a customer who visited the site has been verified.
     device_selected : str
         This is the type of device used to access the booking site.
     instant_booking_selected : str
@@ -216,7 +216,7 @@ def make_prediction_request(submit_button: int, session: int, city_selected: str
     Returns
     -------
     desc_popup: str
-        DESCRIPTION.
+        This is a message in a popup component that indicates corrections to be made before submitting API request.
     missing_para_popup: bool
         This is an output component that opens when selection is not made
         for all parameters before clicking submit buttion.
