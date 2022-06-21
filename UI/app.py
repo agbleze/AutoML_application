@@ -215,12 +215,13 @@ def make_prediction_request(submit_button: int, session: int, city_selected: str
 
     Returns
     -------
-    TYPE
+    desc_popup: str
         DESCRIPTION.
-    bool
-        DESCRIPTION.
-    TYPE
-        DESCRIPTION.
+    missing_para_popup: bool
+        This is an output component that opens when selection is not made
+        for all parameters before clicking submit buttion.
+    prediction_output
+        This is an output component where prediction is displayed.
 
     """
     ctx = dash.callback_context
