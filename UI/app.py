@@ -165,7 +165,7 @@ def toggle_project_description(proj_desc_button_clicked: str, is_open: bool) -> 
     Parameters
     ----------
     proj_desc_button_clicked : str
-        This parameter indicates the each click made on a button.
+        This parameter is a count of each click made on a button.
     is_open : bool
         Has the values True or False that specifies whether the canvas component is opened or not.
 
