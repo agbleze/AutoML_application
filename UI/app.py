@@ -192,8 +192,37 @@ def toggle_project_description(proj_desc_button_clicked: str, is_open: bool) -> 
               Input(component_id='device', component_property='value'),
               Input(component_id='instant_book', component_property='value'))
 
-def make_prediction_request(submit_button, session, city_selected, user_verified_selected,
-                            device_selected, instant_booking_selected):
+def make_prediction_request(submit_button: int, session: int, city_selected: str, user_verified_selected: str,
+                            device_selected: str, instant_booking_selected: str):
+    """
+    This function accepts various input data selected, makes a request to a machine learning API
+    and returns prediction
+
+    Parameters
+    ----------
+    submit_button : int
+        DESCRIPTION.
+    session : int
+        DESCRIPTION.
+    city_selected : str
+        DESCRIPTION.
+    user_verified_selected : str
+        DESCRIPTION.
+    device_selected : str
+        DESCRIPTION.
+    instant_booking_selected : str
+        DESCRIPTION.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+    bool
+        DESCRIPTION.
+    TYPE
+        DESCRIPTION.
+
+    """
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
