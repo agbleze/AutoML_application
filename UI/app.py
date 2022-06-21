@@ -17,18 +17,6 @@ from constant import HOST, PORT, ENDPOINT
 
 URL = f'{HOST}:{PORT}{ENDPOINT}'
 
-print(URL)
-#%%
-# df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
-
-
-# df = df[['num_sessions', 'city', 'country',
-#         'device_class', 'instant_booking',
-#         'user_verified', 'days'
-#         ]]
-
-#df.to_csv('data_used.csv')
-
 #%%
 data_used = pd.read_csv('data_used.csv')
 data_encoded = create_encoded_data(data=data_used, columns=['city',
@@ -169,7 +157,7 @@ app.layout = html.Div([
               Input(component_id='proj_desc', component_property='n_clicks'),
               State(component_id='project_canvans', component_property='is_open')
               )
-def toggle_project_description(proj_desc_button_clicked, is_open):
+def toggle_project_description(proj_desc_button_clicked: str, is_open: bool) -> bool:
     if proj_desc_button_clicked:
         return not is_open
     else:
