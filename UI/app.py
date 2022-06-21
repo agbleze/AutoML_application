@@ -201,17 +201,17 @@ def make_prediction_request(submit_button: int, session: int, city_selected: str
     Parameters
     ----------
     submit_button : int
-        DESCRIPTION.
+        Number of times the submit button has been clicked.
     session : int
-        DESCRIPTION.
+        This describes the number of sessions a customer made on the booking site..
     city_selected : str
-        DESCRIPTION.
+        This is the city from which a customer is accessing the booking site from
     user_verified_selected : str
         DESCRIPTION.
     device_selected : str
-        DESCRIPTION.
+        This is the type of device used to access the booking site.
     instant_booking_selected : str
-        DESCRIPTION.
+        The is a feature on a booking site and value is whether or not this feature was used by a customer.
 
     Returns
     -------
