@@ -67,7 +67,7 @@ def create_offcanvans(id: str, title: str, is_open=False):
                                     the values desktop, phone or tablet
 
                                     __Instant Booking__ : The is a feature on a booking site. Whether or not this
-                                    feature was used by a customer is including in predicting the number of day to
+                                    feature was used by a customer is included in predicting the number of day to
                                     be booked
 
                                     __User Verification Status__ : Whether or not a customer who visited the site
