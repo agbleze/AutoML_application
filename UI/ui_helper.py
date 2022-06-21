@@ -4,6 +4,7 @@ import json
 from typing import List
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+import pandas as pd
 
 def request_prediction(URL: str, data: dict) -> int:
     req = requests.post(url=URL, json=data)
@@ -13,7 +14,7 @@ def request_prediction(URL: str, data: dict) -> int:
 
 
 # %%
-def create_encoded_data(data: pd.DataFrame, columns: List = None):
+def create_encoded_data(data: pd.DataFrame, columns: List = None) -> pd.DataFrame:
     le = LabelEncoder()
     if columns == None:
         columns = data.columns
