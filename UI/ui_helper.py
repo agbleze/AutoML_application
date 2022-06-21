@@ -4,7 +4,6 @@ import json
 from typing import List
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-import pandas as pd
 
 def request_prediction(URL: str, data: dict) -> int:
     """
