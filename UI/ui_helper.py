@@ -7,6 +7,22 @@ from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 
 def request_prediction(URL: str, data: dict) -> int:
+    """
+    This function accepts
+
+    Parameters
+    ----------
+    URL : str
+        The API link.
+    data : dict
+        input data to be used for prediction.
+
+    Returns
+    -------
+    int
+        prediction.
+
+    """
     req = requests.post(url=URL, json=data)
     response = req.content
     prediction = json.loads(response)['predicted_value'][0]
