@@ -15,6 +15,25 @@ def request_prediction(URL: str, data: dict) -> int:
 
 # %%
 def create_encoded_data(data: pd.DataFrame, columns: List = None) -> pd.DataFrame:
+    """
+    This function accepts data in the dataframe format and optional columns parameter
+    and returns a dataframe with variables encoded. When no columns are specified,
+    all columns are encoded and when columns are provided all those columns are
+    encoded.
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Input data.
+    columns : List, optional
+        List of column names which are essential categorical variables in the data to encode. The default is None.
+
+    Returns
+    -------
+    data : DataFrame
+        A dataframe that included the encoded columns.
+
+    """
     le = LabelEncoder()
     if columns == None:
         columns = data.columns
