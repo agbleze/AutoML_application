@@ -158,6 +158,23 @@ app.layout = html.Div([
               State(component_id='project_canvans', component_property='is_open')
               )
 def toggle_project_description(proj_desc_button_clicked: str, is_open: bool) -> bool:
+    """
+    This function accepts click event input and the state of canvas component,
+    and change the state of the canvans component when a click occurs
+
+    Parameters
+    ----------
+    proj_desc_button_clicked : str
+        This parameter indicates the each click made on a button.
+    is_open : bool
+        Has the values True or False that specifies whether the canvas component is opened or not.
+
+    Returns
+    -------
+    bool
+        Has values True or False that determines whether the canvans component should be open.
+
+    """
     if proj_desc_button_clicked:
         return not is_open
     else:
