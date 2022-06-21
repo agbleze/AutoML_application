@@ -7,47 +7,27 @@ from sklearn.preprocessing import LabelEncoder
 import requests
 import json
 from dash.exceptions import PreventUpdate
-from helper_components import output_card
+from helper_components import output_card, create_offcanvans
 
 #%%
-from ui_helper import request_prediction
+from ui_helper import request_prediction, create_encoded_data
 
 #%%
-HOST ='http://ec2-18-220-113-224.us-east-2.compute.amazonaws.com'
-PORT = '8000'
-ENDPOINT = '/predict'
+from constant import HOST, PORT, ENDPOINT
+
+URL = f'{HOST}:{PORT}{ENDPOINT}'
 
 #%%
-df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
+data_used = pd.read_csv('data_used.csv')
+data_encoded = create_encoded_data(data=data_used, columns=['city',
+                                                            'country',
+                                                            'device_class',
+                                                            'instant_booking',
+                                                            'user_verified'
+                                                            ]
+                                   )
 
-df = df[['num_sessions', 'city', 'country',
-        'device_class', 'instant_booking',
-        'user_verified', 'days'
-        ]]
-
-le = LabelEncoder()
-# %%
-df['city_encoded'] = le.fit_transform(df.city)
-df['country_encoded'] = le.fit_transform(df.country)
-df['device_class_encoded'] = le.fit_transform(df.device_class)
-df['instant_booking_encoded'] = le.fit_transform(df.instant_booking)
-df['user_verified_encoded'] = le.fit_transform(df.user_verified)
-
-#%%
-#aindex = df[df['city']=='Kaiserslautern']['city_encoded']#.reset_index()#.reindex([0])
-avale = df[df['city']=='Kaiserslautern']['city_encoded'].unique().item()#.unique().item(#[aindex]
-
-bvale = df[df['city']=='Kaiserslautern']['country_encoded'].unique().item()#.unique()
-
-#%%
-print([avale,bvale])
-#%%
-#ind = df[df['city']=='Kaiserslautern']['city_encoded'].index
-print(df[df['city']=='Kaiserslautern']['city_encoded'].tolist())#[ind].values.tolist()
-
-#%%
-df[df['device_class']=='phone']['device_class_encoded'].unique().tolist()[0]
-
+data_encoded
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
                                                 dbc.themes.SOLAR,
@@ -57,9 +37,30 @@ app = dash.Dash(__name__, external_stylesheets=[
                 )
 
 app.layout = html.Div([
-    dbc.Label("Select characteristics of online visitor to predict the number of booking days"),
+
+    dbc.Row([
+        html.Br(), html.Br(),
+        dbc.Col(dbc.Button('Project description',
+                           id='proj_desc',
+                           n_clicks=0
+                           )
+            ),
+        dbc.Col(children=[
+                            html.Div(
+                                    children=[create_offcanvans(id='project_canvans',
+                                                      title='BookingGauger',
+                                                      is_open=False
+                                                      )
+                                              ]
+                                ),
+                          ]
+                )
+    ]),
+    dbc.Label("Select characteristics of online visitor to predict the number of accommodation days to be booked"),
+    html.Br(), html.Br(),
     dbc.Row([dbc.Col(md=4,
-                     children=[dcc.Dropdown(id='session',
+                     children=[dbc.Label('Number of session'),
+                         dcc.Dropdown(id='session',
                                                  placeholder='Number of sessions by site visitor',
                                                 options=[
                                                     {'label': num_session, 'value': num_session}
@@ -69,21 +70,24 @@ app.layout = html.Div([
                       ]
                      ),
             dbc.Col(lg=4,
-                    children=[dcc.Dropdown(id='city',
+                    children=[dbc.Label('City'),
+                        dcc.Dropdown(id='city',
                                     placeholder='city from which client visited the platform',
                                    options=[{'label': city,
                                              'value': city
                                             }
-                                            for city in df['city'].unique()
+                                            for city in data_encoded['city'].unique()
                                             ]
                                    )
                       ]
                      ),
             dbc.Col(lg=4,
-                    children=[dcc.Dropdown(id='user_verified',
+                    children=[
+                        dbc.Label('User verification status'),
+                        dcc.Dropdown(id='user_verified',
                                            placeholder='Is the visitor verified on platform',
                                                 options=[{'label': user_verified, 'value': user_verified}
-                                                         for user_verified in df['user_verified'].unique()
+                                                         for user_verified in data_encoded['user_verified'].unique()
                                                          ]
                                                 )
                                    ]
@@ -93,26 +97,32 @@ app.layout = html.Div([
     html.Br(), html.Br(),
 
     dbc.Row([dbc.Col(lg=4,
-                     children=[dcc.Dropdown(id='device',
+                     children=[
+                         dbc.Label('Device type'),
+                         dcc.Dropdown(id='device',
                                             placeholder='type of device used to access platform',
                                             options=[{'label': device_class, 'value': device_class}
-                                                     for device_class in df['device_class'].unique()
+                                                     for device_class in data_encoded['device_class'].unique()
                                                      ]
                                             )
                                ]
                      ),
              dbc.Col(lg=4,
                     children=[
+                        dbc.Label('Instant booking feature used?'),
                                 dcc.Dropdown(id='instant_book',
                                                 placeholder='Whether visitor used instant booking feature',
                                                 options=[
                                                             {'label': instant_booking, 'value': instant_booking}
-                                                            for instant_booking in df['instant_booking'].unique()
+                                                            for instant_booking in data_encoded['instant_booking'].unique()
                                                         ]
                                             )
                                 ]
                      ),
-             dbc.Col([dbc.Button(id='submit_parameters',
+             dbc.Col([
+                 #html.Br(),
+                 dbc.Label(''),
+                 dbc.Button(id='submit_parameters',
                                  children='Predict booking days'
                                  )
                       ]
@@ -142,6 +152,36 @@ app.layout = html.Div([
 ])
 
 ##################### backend ##############################
+
+@app.callback(Output(component_id='project_canvans', component_property='is_open'),
+              Input(component_id='proj_desc', component_property='n_clicks'),
+              State(component_id='project_canvans', component_property='is_open')
+              )
+def toggle_project_description(proj_desc_button_clicked: str, is_open: bool) -> bool:
+    """
+    This function accepts click event input and the state of canvas component,
+    and change the state of the canvans component when a click occurs
+
+    Parameters
+    ----------
+    proj_desc_button_clicked : str
+        This parameter is a count of each click made on a button.
+    is_open : bool
+        Has the values True or False that specifies whether the canvas component is opened or not.
+
+    Returns
+    -------
+    bool
+        Has values True or False that determines whether the canvans component should be open.
+
+    """
+    if proj_desc_button_clicked:
+        return not is_open
+    else:
+        return is_open
+
+
+
 @app.callback(Output(component_id='desc_popup', component_property='children'),
               Output(component_id='missing_para_popup', component_property='is_open'),
               Output(component_id='prediction_output', component_property='children'),
@@ -152,14 +192,40 @@ app.layout = html.Div([
               Input(component_id='device', component_property='value'),
               Input(component_id='instant_book', component_property='value'))
 
-def make_prediction_request(submit_button, session, city_selected, user_verified_selected,
-                            device_selected, instant_booking_selected):
+def make_prediction_request(submit_button: int, session: int, city_selected: str, user_verified_selected: str,
+                            device_selected: str, instant_booking_selected: str):
+    """
+    This function accepts various input data selected, makes a request to a machine learning API
+    and returns prediction
+
+    Parameters
+    ----------
+    submit_button : int
+        Number of times the submit button has been clicked.
+    session : int
+        This describes the number of sessions a customer made on the booking site..
+    city_selected : str
+        This is the city from which a customer is accessing the booking site from
+    user_verified_selected : str
+        Whether or not a customer who visited the site has been verified.
+    device_selected : str
+        This is the type of device used to access the booking site.
+    instant_booking_selected : str
+        The is a feature on a booking site and value is whether or not this feature was used by a customer.
+
+    Returns
+    -------
+    desc_popup: str
+        This is a message in a popup component that indicates corrections to be made before submitting API request.
+    missing_para_popup: bool
+        This is an output component that opens when selection is not made
+        for all parameters before clicking submit buttion.
+    prediction_output
+        This is an output component where prediction is displayed.
+
+    """
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    # if ((not session) and (not city_selected) and (not user_verified_selected)
-    #         and (not device_selected) and (not instant_booking_selected) and (button_id != 'submit_parameters')
-    #     ):
-    #     raise PreventUpdate
 
     if button_id == 'submit_parameters':
         if ((not session) or (not city_selected) or (not user_verified_selected)
@@ -171,11 +237,11 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                        )
             return message, True, dash.no_update
         else:
-            city_encoded = df[df['city']==city_selected]['city_encoded'].unique().tolist()[0]
-            country_encoded = df[df['city']==city_selected]['country_encoded'].unique().tolist()[0]
-            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].unique().tolist()[0]
-            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].unique().tolist()[0]
-            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].unique().tolist()[0]
+            city_encoded = data_encoded[data_encoded['city']==city_selected]['city_encoded'].unique().tolist()[0]
+            country_encoded = data_encoded[data_encoded['city']==city_selected]['country_encoded'].unique().tolist()[0]
+            user_verified_encoded = data_encoded[data_encoded['user_verified']==user_verified_selected]['user_verified_encoded'].unique().tolist()[0]
+            device_class_encoded = data_encoded[data_encoded['device_class']==device_selected]['device_class_encoded'].unique().tolist()[0]
+            instant_booking_encoded = data_encoded[data_encoded['instant_booking']==instant_booking_selected]['instant_booking_encoded'].unique().tolist()[0]
 
             in_data = {'num_sessions': session,
                     'city_encoded': city_encoded,
@@ -185,15 +251,7 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                     'user_verified_encoded': user_verified_encoded
                     }
 
-
-            # prediction = request_prediction()
-            # URL = f'{HOST}:{PORT}{ENDPOINT}'
-            # reqs = requests.post(url=URL, json=in_data)
-            # response = reqs.content
-            # response_json = json.loads(response)
-            # prediction = response_json['predicted_value']
-
-            prediction = request_prediction(URL="http://192.168.1.3:8000/predict",
+            prediction = request_prediction(URL=URL,
                                             data=in_data
                                         )
 
@@ -202,51 +260,5 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
             else:
                 return dash.no_update, False, f'{round(prediction)} day'
 
-        # URL = "http://192.168.1.3:8000/predict"
 
-        # #in_data = {}
-
-        # in_data = {
-        #   'num_sessions': 2,
-        #   'city_encoded': 4,
-        #   'country_encoded': 1,
-        #   'device_class_encoded': 2,
-        #   'instant_booking_encoded': 0,
-        #   'user_verified_encoded': 1
-        # }
-
-
-
-        # a = request_prediction(URL=URL, data = in_data)
-        # return a
-
-
-
-
-
-            # create pop-up indicating that all parameters needs to provided
-
-
-    """_summary_
-
-        TODO:
-        1. Determine if button has been clicked
-        2. If clicked, determine if values have been selected for all dropdown
-            a. if all values are not selected provide pop-up indicating all values are to be provided
-            b. If all values are provided, move to step 3
-        3. Assign selected values to variables
-        4. if selected value is string, filter data by selected values and take its equivalent encoded value ->
-        5. Create list of all selected values and A
-        6. create request with selected values as argments
-        7. send post request to API
-        8. Receive response and retrieve the prediction returned
-        9. Return prediction to dash output.
-    """
-
-app.run_server(port='4047', host='0.0.0.0', debug=False)
-
-# # %%
-# df['user_verified']
-# # %%
-# df.columns
-# %%
+app.run_server(port='4048', host='0.0.0.0', debug=False, use_reloader=False)
