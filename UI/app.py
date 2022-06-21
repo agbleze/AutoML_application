@@ -19,26 +19,27 @@ URL = f'{HOST}:{PORT}{ENDPOINT}'
 
 print(URL)
 #%%
-df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
+# df = pd.read_csv(r'/Users/lin/Documents/python_venvs/tpot_homelike_env/machine_learning_api/data/all_conversions_variables.csv')
 
 
-df = df[['num_sessions', 'city', 'country',
-        'device_class', 'instant_booking',
-        'user_verified', 'days'
-        ]]
+# df = df[['num_sessions', 'city', 'country',
+#         'device_class', 'instant_booking',
+#         'user_verified', 'days'
+#         ]]
 
+#df.to_csv('data_used.csv')
 
 #%%
-df = create_encoded_data(data=df, columns=['city',
-                                            'country',
-                                            'device_class',
-                                            'instant_booking',
-                                            'user_verified'
-                                            ]
-                          )
+data_used = pd.read_csv('data_used.csv')
+data_encoded = create_encoded_data(data=data_used, columns=['city',
+                                                            'country',
+                                                            'device_class',
+                                                            'instant_booking',
+                                                            'user_verified'
+                                                            ]
+                                   )
 
-
-
+data_encoded
 #%%
 app = dash.Dash(__name__, external_stylesheets=[
                                                 dbc.themes.SOLAR,
@@ -87,7 +88,7 @@ app.layout = html.Div([
                                    options=[{'label': city,
                                              'value': city
                                             }
-                                            for city in df['city'].unique()
+                                            for city in data_encoded['city'].unique()
                                             ]
                                    )
                       ]
@@ -98,7 +99,7 @@ app.layout = html.Div([
                         dcc.Dropdown(id='user_verified',
                                            placeholder='Is the visitor verified on platform',
                                                 options=[{'label': user_verified, 'value': user_verified}
-                                                         for user_verified in df['user_verified'].unique()
+                                                         for user_verified in data_encoded['user_verified'].unique()
                                                          ]
                                                 )
                                    ]
@@ -113,7 +114,7 @@ app.layout = html.Div([
                          dcc.Dropdown(id='device',
                                             placeholder='type of device used to access platform',
                                             options=[{'label': device_class, 'value': device_class}
-                                                     for device_class in df['device_class'].unique()
+                                                     for device_class in data_encoded['device_class'].unique()
                                                      ]
                                             )
                                ]
@@ -125,7 +126,7 @@ app.layout = html.Div([
                                                 placeholder='Whether visitor used instant booking feature',
                                                 options=[
                                                             {'label': instant_booking, 'value': instant_booking}
-                                                            for instant_booking in df['instant_booking'].unique()
+                                                            for instant_booking in data_encoded['instant_booking'].unique()
                                                         ]
                                             )
                                 ]
@@ -201,11 +202,11 @@ def make_prediction_request(submit_button, session, city_selected, user_verified
                        )
             return message, True, dash.no_update
         else:
-            city_encoded = df[df['city']==city_selected]['city_encoded'].unique().tolist()[0]
-            country_encoded = df[df['city']==city_selected]['country_encoded'].unique().tolist()[0]
-            user_verified_encoded = df[df['user_verified']==user_verified_selected]['user_verified_encoded'].unique().tolist()[0]
-            device_class_encoded = df[df['device_class']==device_selected]['device_class_encoded'].unique().tolist()[0]
-            instant_booking_encoded = df[df['instant_booking']==instant_booking_selected]['instant_booking_encoded'].unique().tolist()[0]
+            city_encoded = data_encoded[data_encoded['city']==city_selected]['city_encoded'].unique().tolist()[0]
+            country_encoded = data_encoded[data_encoded['city']==city_selected]['country_encoded'].unique().tolist()[0]
+            user_verified_encoded = data_encoded[data_encoded['user_verified']==user_verified_selected]['user_verified_encoded'].unique().tolist()[0]
+            device_class_encoded = data_encoded[data_encoded['device_class']==device_selected]['device_class_encoded'].unique().tolist()[0]
+            instant_booking_encoded = data_encoded[data_encoded['instant_booking']==instant_booking_selected]['instant_booking_encoded'].unique().tolist()[0]
 
             in_data = {'num_sessions': session,
                     'city_encoded': city_encoded,
