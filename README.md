@@ -75,9 +75,30 @@ Now the api is running and request can be made to it. To do that, the dash app n
 added to api url to successfully reach the prediction model.
 
 
+#### How to run the dash web application
 
-In order to allocated the necessary resources for accommodation booking, the available data is used to predict
-number of days that an online vistor will book for accommodation.
+The code for the web application is in the UI folder and infact can be easily run with same process used to run the api. The difference is that
+the result this time round will be a nice user interface, you can play around with.
+
+__Preferrably__, the dash app should be run separately in a different virtual environment. Just for clarity and to take note of subtle differences,
+the steps are highlighted below
+
+```
+python3 -m venv ui_env
+```
+
+```
+source ui_env/bin/activate
+```
+
+```
+cd UI
+```
+
+```
+python3 app.py
+```
+
 
  #### Project description
 
