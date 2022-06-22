@@ -3,9 +3,12 @@
 #### Overview
 
 This project builds an Automated Machine Learning (AutoML) API and dash web application as an interface 
-to request prediction of number of days to be booked for accommodation by a user. The intended enduser is an online booking client 
-with data on user behaviour of their online visitors who access the booking platform (website) to make
-reservations.
+to request prediction of number of days to be booked for accommodation by a user. 
+
+
+### Packages used
+The packages used
+
 
 In order to allocated the necessary resources for accommodation booking, the available data is used to predict
 number of days that an online vistor will book for accommodation.
@@ -14,8 +17,8 @@ number of days that an online vistor will book for accommodation.
 
 The aim of this project is to predict the number of days that
 customers are likely to book an accommodation for based on user bahaviour.
-The client is an accommodation provider who sought to obtain
-an intelligent tool that can enable the prediction of booking days
+The end-user is an accommodation provider who sought to obtain
+an intelligent tool that can enable the prediction of number of days that an online vistor will book for accommodation.
 based on a number of features.
 
 #### Features / variables used
