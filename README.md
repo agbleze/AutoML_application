@@ -23,15 +23,45 @@ pass them into the model to make a prediction and return a reponse to be display
 
 #### How to run the AutoML API
 
-
-
 Note that the AutoML API and dash app are independent of each other and can infact be treated as separate projects in their own right
 despite their complementary role. For example, you can make request to the API for prediction in a notebook environment with 
 the dash web application. However, for smooth workflow and offloading of all the grunt work, the User Interface (UI) provided by
 the dash wep application is recommended to be used in making request.
 
-By this both the API and the web application should be running.
+By this both the API and the web application should be running at the same time.
 
+The steps for running the API are as below
+
+1. Create a virtual environment (replace 'project' with your prefreed pathname)
+
+```
+python3 -m venv project_env
+```
+ 
+2. Navigate into the bin folder in the virtual env created
+
+```
+cd project_env/bin
+```
+
+3. Activate your virtual environment as follows
+
+```
+source activate
+```
+
+3. Clone repository into the virtual environment created above
+With **_git already installed_**, this can done as follows in your terminal;
+
+```
+git clone git@github.com:enviosystems/data-insights.git
+```
+
+Within the the cloned repo, you need to navigate to the folder where the files for the whole app are **(Dashboard_web_app)**. In that folder there is a requirements.txt file which contains packages used for the project. They should be installe dusing the code below in your terminal 
+
+```
+pip install -r requirements.txt
+```
 
 ####
 
