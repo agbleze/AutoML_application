@@ -95,6 +95,12 @@ source ui_env/bin/activate
 cd UI
 ```
 
+
+```
+pip install -r requirements.txt
+```
+
+
 ```
 python3 app.py
 ```
