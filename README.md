@@ -6,8 +6,34 @@ This project builds an Automated Machine Learning (AutoML) API and dash web appl
 to request prediction of number of days to be booked for accommodation by a user. 
 
 
-### Packages used
-The packages used
+#### Packages used for the Dash web application
+The exact packages and version used found in UI/requirements.txt
+
+
+#### Packages used for AutoML API
+The exact packages and version used are found in api/requirements.txt
+
+
+#### How the application works 
+
+The dash web application provides a User Interface (UI) -- code in UI folder -- for selecting various variables for prediction.
+When the button is clicked for prediction, all the inputs selected are retrieved and transformed (label encoding is to make categorical
+variable acceptable in machine learning model). The inputs are used to make a request to the API. The API accepts the inputs and
+pass them into the model to make a prediction and return a reponse to be displayed in a user friendly manner in the UI.
+
+#### How to run the AutoML API
+
+
+
+Note that the AutoML API and dash app are independent of each other and can infact be treated as separate projects in their own right
+despite their complementary role. For example, you can make request to the API for prediction in a notebook environment with 
+the dash web application. However, for smooth workflow and offloading of all the grunt work, the User Interface (UI) provided by
+the dash wep application is recommended to be used in making request.
+
+By this both the API and the web application should be running.
+
+
+####
 
 
 In order to allocated the necessary resources for accommodation booking, the available data is used to predict
