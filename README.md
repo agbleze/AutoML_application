@@ -38,32 +38,42 @@ The steps for running the API are as below
 python3 -m venv project_env
 ```
  
-2. Navigate into the bin folder in the virtual env created
-
-```
-cd project_env/bin
-```
 
 3. Activate your virtual environment as follows
 
 ```
-source activate
+source project_env/bin/activate
 ```
 
-3. Clone repository into the virtual environment created above
-With **_git already installed_**, this can done as follows in your terminal;
+3. Clone repository into the virtual environment created
+With **_git already installed_**, run the command below in your terminal to get the code into your local environment
 
 ```
-git clone git@github.com:enviosystems/data-insights.git
+git clone git@github.com:agbleze/machine_learning_api.git
 ```
 
-Within the the cloned repo, you need to navigate to the folder where the files for the whole app are **(Dashboard_web_app)**. In that folder there is a requirements.txt file which contains packages used for the project. They should be installe dusing the code below in your terminal 
+Within the the cloned repo, the folder api contains all the code to run the api. First, navigate to the api folder.
+From the terminal run
+
+```
+cd api
+```
+
+4. Install packages used as follows
 
 ```
 pip install -r requirements.txt
 ```
 
-####
+5. Run the API
+
+```
+python3 app.py
+```
+
+Now the api is running and request can be made to it. To do that, the dash app needs to be run and with the user interface provided, making prediction requests becomes easier. Note that the endpoint to the machine learning api is "/predict" and this has to be 
+added to api url to successfully reach the prediction model.
+
 
 
 In order to allocated the necessary resources for accommodation booking, the available data is used to predict
