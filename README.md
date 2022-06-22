@@ -3,7 +3,7 @@
 #### Overview
 
 This project builds an Automated Machine Learning (AutoML) API and dash web application as an interface 
-to request number of accommodation booking prediction. The intended enduser is an online booking client 
+to request prediction of number of days to be booked for accommodation by a user. The intended enduser is an online booking client 
 with data on user behaviour of their online visitors who access the booking platform (website) to make
 reservations.
 
