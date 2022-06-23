@@ -1,27 +1,27 @@
-### BookingGauger: Machine learning api for predicting number of accommodation days an online visitor will book.
+## BookingGauger: Machine learning api for predicting number of accommodation days an online visitor will book.
 
-#### Overview
+## Overview
 
 This project builds an Automated Machine Learning (AutoML) API and dash web application as an interface 
 to request prediction of number of days to be booked for accommodation by a user. 
 
 
-#### Packages used for the Dash web application
+### Packages used for the Dash web application
 The exact packages and version used found in UI/requirements.txt
 
 
-#### Packages used for AutoML API
+### Packages used for AutoML API
 The exact packages and version used are found in api/requirements.txt
 
 
-#### How the application works 
+### How the application works 
 
 The dash web application provides a User Interface (UI) -- code in UI folder -- for selecting various variables for prediction.
 When the button is clicked for prediction, all the inputs selected are retrieved and transformed (label encoding is to make categorical
 variable acceptable in machine learning model). The inputs are used to make a request to the API. The API accepts the inputs and
 pass them into the model to make a prediction and return a reponse to be displayed in a user friendly manner in the UI.
 
-#### How to run the AutoML API
+### How to run the AutoML API
 
 Note that the AutoML API and dash app are independent of each other and can infact be treated as separate projects in their own right
 despite their complementary role. For example, you can make request to the API for prediction in a notebook environment with 
@@ -75,7 +75,7 @@ Now the api is running and request can be made to it. To do that, the dash app n
 added to api url to successfully reach the prediction model.
 
 
-#### How to run the dash web application
+### How to run the dash web application
 
 The code for the web application is in the UI folder and infact can be easily run with same process used to run the api. The difference is that
 the result this time round will be a nice user interface, you can play around with.
@@ -106,7 +106,7 @@ python3 app.py
 ```
 
 
- #### Project description
+## Project description
 
 The aim of this project is to predict the number of days that
 customers are likely to book an accommodation for based on user bahaviour.
@@ -114,13 +114,13 @@ The end-user is an accommodation provider who sought to obtain
 an intelligent tool that can enable the prediction of number of days that an online vistor will book for accommodation.
 based on a number of features.
 
-#### Features / variables used
+### Features / variables used
 
 The dataset had a number of variables used as predictors for
 predicting number of accommodations booked as the target variable.
 These includes the following;
 
-##### Predictor variables
+#### Predictor variables
 __Number of sessions__ : This describes the number of sessions a customer made
 on the booking site.
 
@@ -140,11 +140,11 @@ be booked
 __User Verification Status__ : Whether or not a customer who visited the site
 has been verified is included in predicting number of days to be booked.
 
-##### Target variable
+### Target variable
 __ Number of accommodation days to be booked__
 
 
-#### Tools and method used
+### Tools and method used
 Automated machine learning (AutoML) was employed to deliver a high
 accuracy optimized prediction model. The model is used to create
 an API that receives request, makes and send prediction as response
@@ -160,7 +160,7 @@ Among others, the tools used included the following
 * Flask to develop the API for the machine learning model
 
 
-#### Project output
+### Project output
 
 The main output of this project were the following
 
