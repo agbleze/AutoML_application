@@ -39,7 +39,7 @@ python3 -m venv project_env
 ```
  
 
-3. Activate your virtual environment as follows
+2. Activate your virtual environment as follows
 
 ```
 source project_env/bin/activate
@@ -71,7 +71,7 @@ pip install -r requirements.txt
 python3 app.py
 ```
 
-Now the api is running and request can be made to it. To do that, the dash app needs to be run and with the user interface provided, making prediction requests becomes easier. Note that the endpoint to the machine learning api is "/predict" and this has to be 
+Now, the API is running and request can be made to it. To do that, the dash app can be run to provide a user interface that supports easier prediction requests. Note that the endpoint to the machine learning api is "/predict" and this has to be 
 added to api url to successfully reach the prediction model.
 
 
