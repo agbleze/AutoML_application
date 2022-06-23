@@ -1,4 +1,4 @@
-## BookingGauger: Machine learning api for predicting number of accommodation days an online visitor will book.
+## BookingGauger: Automated Machine Learning API for predicting number of accommodation days an online visitor will book.
 
 ## Overview
 
