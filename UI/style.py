@@ -1,4 +1,4 @@
-cardimg_style = {'width': '100%', 'height': '100%', 
+cardimg_style = {'width': '100%', 'height': '100%',
               "opacity": 0.2, "objectFit": "cover"
               }
 cardbody_style = {"margin": "2%"}
