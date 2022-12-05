@@ -1,7 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 from style import cardbody_style, card_icon, cardimg_style, card_style
-
+import os
 
 
 def output_card(id: str = None, card_label: str =None,
@@ -108,3 +108,10 @@ def create_offcanvans(id: str, title: str, is_open=False):
             ),
         ]
     )
+
+
+
+def get_data_path(folder_name, file_name):
+    cwd = os.getcwd()
+    return f"{cwd}/{folder_name}/{file_name}"
+
