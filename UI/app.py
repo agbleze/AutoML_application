@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 import requests
 import json
 from dash.exceptions import PreventUpdate
-from helper_components import output_card, create_offcanvans
+from helper_components import output_card, create_offcanvans, get_data_path
 
 #%%
 from ui_helper import request_prediction, create_encoded_data
@@ -18,7 +18,9 @@ from constant import HOST, PORT, ENDPOINT
 URL = f'{HOST}:{PORT}{ENDPOINT}'
 
 #%%
-data_used = pd.read_csv('data_used.csv')
+data_path = get_data_path(folder_name='UI', file_name='data_used.csv')
+data_used = pd.read_csv(data_path)
+
 data_encoded = create_encoded_data(data=data_used, columns=['city',
                                                             'country',
                                                             'device_class',
