@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: booking-gauger-tpoter
+Version: 0.0.1
+Summary: This package trains and develop machine learning model                   for predicting number of days a room will be booked for accommodation                  by an online visitor. The package uses AutoML under the hood to train                 and select best algorithm for the prediction.
+Home-page: UNKNOWN
+Author: Agbleze Linus
+Author-email: UNKNOWN
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN

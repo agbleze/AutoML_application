@@ -1,0 +1,8 @@
+README.md
+setup.py
+booking_gauger_tpoter/__init_.py
+booking_gauger_tpoter.egg-info/PKG-INFO
+booking_gauger_tpoter.egg-info/SOURCES.txt
+booking_gauger_tpoter.egg-info/dependency_links.txt
+booking_gauger_tpoter.egg-info/not-zip-safe
+booking_gauger_tpoter.egg-info/top_level.txt
