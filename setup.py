@@ -12,4 +12,4 @@ setup(name='booking_gauger_tpoter',
                 and select best algorithm for the prediction.',
     zip_safe=False,
     license='MIT'
-      )
+    )
