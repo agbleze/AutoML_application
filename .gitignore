@@ -1,5 +1,9 @@
 *.cfg
-/lib
-/share
-/include
-/bin
+lib/
+share/
+include/
+bin/
+.env
+*.pyc
+__pycache__/
+machine_learning_api/
