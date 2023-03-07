@@ -10,6 +10,6 @@ args = Namespace(categorical_features = ['device_class', 'city', 'country',
                                          'instant_booking', 'user_verified'
                                         ],
                 target_variable = 'days',
-                data_foldername = 'data',
+                data_foldername = 'booking_gauger_tpoter/data',
                 data_filename = 'all_conversions_variables.csv'
                 )
