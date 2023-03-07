@@ -5,7 +5,7 @@ from tpot import TPOTRegressor
 from sklearn.pipeline import make_pipeline
 import pandas as pd
 from joblib import dump
-from model.utils import get_path
+from .utils import get_path
 
 
 
@@ -35,8 +35,8 @@ class TpotModeler(object):
                                   random_state = random_state, config_dict=config_dict,
                                   **kwargs)
         self.optimizer_pipeline = make_pipeline(built_preppreprocess_pipeline,
-                                           optimizer
-                                           )
+                                                optimizer
+                                                )
         
         self.optimizer_pipeline.fit(self.training_features, self.training_target_variable)
         return self.optimizer_pipeline
