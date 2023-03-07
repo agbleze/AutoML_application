@@ -1,7 +1,7 @@
 
 #%%
-from model.tpoter_pipeline import TpotModeler
-from model.utils import get_path
+from booking_gauger_tpoter.model.tpoter_pipeline import TpotModeler
+from booking_gauger_tpoter.model.utils import get_path
 from arguments import args
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -31,7 +31,7 @@ tpot_mod = TpotModeler(training_features=X_train, training_target_variable=y_tra
                     )
 
 
-tpot_fitted_mod = tpot_mod.fit_models(max_time_mins=60)
+tpot_fitted_mod = tpot_mod.fit_models(max_time_mins=60, warm_start=True)
 
 test_error = tpot_mod.evaluate_testset()
 
@@ -47,6 +47,7 @@ days_predict = tpot_mod.predict_booked_days(device_class='desktop', city='Berlin
 
 print(days_predict)
 
+#%%
 rmse = lambda y, y_hat: np.sqrt(mean_squared_error(y, y_hat))
 
 
@@ -55,11 +56,11 @@ y_pred = tpot_fitted_mod.predict(X_test)
 
 rmse(y=y_test, y_hat=y_pred)
 
-# save the best model
+#%% save the best model
 
 tpot_mod.save_best_model()
 
-## load the saved model and use it for prediction
+#%%# load the saved model and use it for prediction
 model_path = get_path(folder_name='model_store', file_name='best_model.model')
 
 loaded_model = joblib.load(filename=model_path)
@@ -68,9 +69,9 @@ loaded_model = joblib.load(filename=model_path)
 #%%
 
 in_data = {'num_sessions': 2, 'city': 'Berlin', 'country': 'DE',
-                    'device_class': 'desktop', 'instant_booking': 'Not_instant',
-                    'user_verified': 'Verified'
-                    }
+            'device_class': 'desktop', 'instant_booking': 'Not_instant',
+            'user_verified': 'Verified'
+            }
         
 prediction_input_data = pd.DataFrame(data=in_data, index=[0])
 
